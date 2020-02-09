@@ -14,11 +14,31 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// Route endpoints
-app.post('/api/prime_numbers', (req,res)=>{
-    const median = getMedianPrimeNumbers(req.body.upperLimit)
-    console.log('-----------------------------------------')
-    console.log(`median = ${median}`)
+// Route protection dummy middleware (in real life scenario this could be JWT middlewares to verify and ensure tokens)
+const verifySecureRequest = (req,res,next) =>{
+    const {securetoken} = req.headers
+
+    // Check the token (for instance stored in process.env)
+    if(securetoken != 'djsklbdakldasjk')
+        return res.status(401).json({
+            message: 'unauthorized'
+        });
+    else
+        next()
+}
+
+// Route endpoint
+app.post('/api/prime_numbers', verifySecureRequest ,(req,res)=>{
+    const upperLimit = req.body.upperLimit
+    if(!upperLimit || req.body.upperLimit < 0 || typeof(upperLimit) == 'string') return res.status(400).json({
+        message: 'Bad Input',
+    });
+
+    const median = getMedianPrimeNumbers(upperLimit)
+    return res.status(200).json({
+        message: 'OK',
+        median
+    });
 })
 
 // Serve client UI in production mode
@@ -33,4 +53,4 @@ else{
 }
 
 // Server listening on port
-app.listen(port, () => console.log(`prime_test ${process.env.NODE_ENV || ""} Server listening on port ${port}!`))
+app.listen(port, () => console.log(`prime_test ${process.env.NODE_ENV || ''} Server listening on port ${port}!`))
