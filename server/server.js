@@ -7,7 +7,7 @@ const app = express()
 const port = process.env.PORT || 3001
 
 // Server imports
-const getPrimeNumbers = require('./businessLogic/primeNumbers')
+const getMedianPrimeNumbers = require('./businessLogic/primeNumbers')
 
 // Required middlewares
 app.use(cors())
@@ -15,7 +15,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Route endpoints
-app.get('/api/prime_numbers', getPrimeNumbers)
+app.post('/api/prime_numbers', (req,res)=>{
+    const median = getMedianPrimeNumbers(req.body.upperLimit)
+    console.log('-----------------------------------------')
+    console.log(`median = ${median}`)
+})
 
 // Serve client UI in production mode
 const clientServe = express.static(path.resolve(__dirname, '../client/build'))
