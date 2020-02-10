@@ -8,7 +8,7 @@
     "start": "node server.js",
     "clientDev": " cd ../ && npm start --prefix client",
     "serverDev": "cross-env NODE_ENV=development nodemon server.js",
-    "serverProd":"cross-env NODE_ENV=production node server.js",
+    "serverProd": "cross-env NODE_ENV=production node server.js",
     "clientProd": "cd ../ && npm run build --prefix client",
     "dev": "concurrently \"npm run serverDev\"  \"npm run clientDev\"",
     "prod": "concurrently \"npm run serverProd\"  \"npm run clientProd\""

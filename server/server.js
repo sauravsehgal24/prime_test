@@ -29,8 +29,9 @@ const verifySecureRequest = (req,res,next) =>{
 
 // Route endpoint
 app.post('/api/prime_numbers', verifySecureRequest ,(req,res)=>{
+    
     const upperLimit = req.body.upperLimit
-    if(!upperLimit || req.body.upperLimit < 0 || typeof(upperLimit) == 'string') return res.status(400).json({
+    if(!upperLimit || upperLimit <= 0 || upperLimit == 1) return res.status(400).json({
         message: 'Bad Input',
     });
 
