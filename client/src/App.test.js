@@ -1,9 +1,14 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import ReactDom from 'react-dom';
+import {cleanup } from "@testing-library/react";
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+afterEach(cleanup);
+
+describe('App Component', ()=> {
+  it("should render successfully", ()=>{
+    const div = document.createElement('div');
+    ReactDom.render(<App></App>,div)
+    ReactDom.unmountComponentAtNode(div) 
+  });
 });

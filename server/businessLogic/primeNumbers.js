@@ -1,9 +1,18 @@
+const isValidReqInput = require('../validation')
+
 /**
  * @description (This algorithm takes the upper limit number and calculate the median of all the prime numbers from 0 to upperlimit)
  * @param {int} upperLimit 
  * @returns {array} (array of medians)
  */
 const getMedianPrimeNumbers = (upperLimit) =>{
+
+    // Input validation for testing purposes
+    if(isValidReqInput(upperLimit).error != null){
+        return 0;
+    }
+
+    else{
     // 0 and 1 are not prime numbers
     var primeNumbers = [false,false]
 
@@ -42,6 +51,7 @@ const getMedianPrimeNumbers = (upperLimit) =>{
             const median = primeNumbers[((count+1) / 2) - 1]
             return [median]
         }
+    }
 }
 
 module.exports = getMedianPrimeNumbers
