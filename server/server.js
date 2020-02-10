@@ -8,6 +8,7 @@ const port = process.env.PORT || 3001
 
 // Server imports
 const getMedianPrimeNumbers = require('./businessLogic/primeNumbers')
+const isValidReqInput = require('./validation')
 
 // Required middlewares
 app.use(cors())
@@ -16,25 +17,34 @@ app.use(bodyParser.json())
 
 // Route protection dummy middleware (in real life scenario this could be JWT middlewares to verify and ensure tokens)
 const verifySecureRequest = (req,res,next) =>{
-    const {securetoken} = req.headers
 
-    // Check the token (for instance stored in process.env)
+    // De-Structuring req
+    const {
+        headers:{
+            securetoken
+        },
+        body:{
+            upperLimit
+        }
+    } = req
+
+    // Check the token (for instance stored in process.env) and server side input validation
     if(securetoken != 'djsklbdakldasjk')
         return res.status(401).json({
             message: 'unauthorized'
         })
+    else if(isValidReqInput(upperLimit).error != null){
+        return res.status(400).json({
+            message: 'Bad Input'
+        })
+    }
     else
         next()
 }
 
 // Route endpoint
 app.post('/api/prime_numbers', verifySecureRequest ,(req,res)=>{
-    
     const upperLimit = req.body.upperLimit
-    if(!upperLimit || upperLimit <= 0 || upperLimit == 1) return res.status(400).json({
-        message: 'Bad Input',
-    })
-
     const median = getMedianPrimeNumbers(upperLimit)
     return res.status(200).json({
         message: 'OK',
