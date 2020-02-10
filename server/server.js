@@ -22,7 +22,7 @@ const verifySecureRequest = (req,res,next) =>{
     if(securetoken != 'djsklbdakldasjk')
         return res.status(401).json({
             message: 'unauthorized'
-        });
+        })
     else
         next()
 }
@@ -33,13 +33,13 @@ app.post('/api/prime_numbers', verifySecureRequest ,(req,res)=>{
     const upperLimit = req.body.upperLimit
     if(!upperLimit || upperLimit <= 0 || upperLimit == 1) return res.status(400).json({
         message: 'Bad Input',
-    });
+    })
 
     const median = getMedianPrimeNumbers(upperLimit)
     return res.status(200).json({
         message: 'OK',
         median
-    });
+    })
 })
 
 // Serve client UI in production mode

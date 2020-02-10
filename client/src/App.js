@@ -46,7 +46,6 @@ function App() {
 
   return (
     <Container
-      style={{ backgroundImage: "url(./assets/images/mathSigns.png)" }}
       fluid
     >
       <Row>
