@@ -1,5 +1,5 @@
 # Prime Test
-A Full-Stack Web App to calculate median of prime numbers between the given range. View live app here: https://medianprimeherokuapp.com/ 
+A Full-Stack Web App to calculate median of prime numbers between the given range. Live app here: https://medianprime.herokuapp.com/ 
 
 ## Tech Stack
 ReactJS, NodeJS
